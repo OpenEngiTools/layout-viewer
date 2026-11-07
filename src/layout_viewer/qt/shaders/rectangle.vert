@@ -1,3 +1,7 @@
+#version 440
+#extension GL_GOOGLE_include_directive : require
+#include "uniforms.glsl"
+
 layout(location = 0) flat out uint net_id;
 void main() {
     net_id = 0u;

@@ -1,3 +1,7 @@
+#version 440
+#extension GL_GOOGLE_include_directive : require
+#include "uniforms.glsl"
+
 layout(location = 0) in vec2 stroke_position;
 layout(location = 1) flat in float stroke_half_length;
 layout(location = 2) flat in uint net_id;

@@ -1,10 +1,16 @@
 
+#version 440
+#extension GL_GOOGLE_include_directive : require
+#include "uniforms.glsl"
+
 layout(location = 0) in vec4 start_split;
 layout(location = 1) in vec4 end_split;
 layout(location = 2) in uint vertex_net;
 layout(location = 0) out vec2 stroke_position;
 layout(location = 1) flat out float stroke_half_length;
 layout(location = 2) flat out uint net_id;
+
+#include "common.glsl"
 
 vec2 to_screen(vec4 position) {
     vec4 relative = delta(position, camera_split);
