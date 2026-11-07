@@ -27,3 +27,7 @@ After editing shader sources in a checkout, refresh the local packs with:
 ```bash
 python tools/bake_viewer_shaders.py
 ```
+
+## License
+
+This project is licensed under the Apache License 2.0. See [LICENSE](LICENSE).
