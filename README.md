@@ -20,6 +20,12 @@ python -m layout_viewer --backend vulkan
 
 ## Development
 
+Install the checkout and its runtime dependencies into the active environment:
+
+```bash
+python -m pip install -e .
+```
+
 Wheel and editable builds compile the RHI shaders in `src/layout_viewer/qt/shaders`
 with the Qt `qsb` tool shipped by PySide6 (or the executable named by `PYEDB_QSB`).
 After editing shader sources in a checkout, refresh the local packs with:

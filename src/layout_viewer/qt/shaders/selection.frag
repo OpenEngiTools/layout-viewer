@@ -1,3 +1,7 @@
+#version 440
+#extension GL_GOOGLE_include_directive : require
+#include "uniforms.glsl"
+
 layout(binding = 1) uniform sampler2D mask_texture;
 layout(location = 0) out vec4 fragment_color;
 float boundary(vec2 uv, vec2 step_uv, float center) {
