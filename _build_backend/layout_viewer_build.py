@@ -1,6 +1,3 @@
-# Copyright (C) 2023 - 2026 Synopsys, Inc. and ANSYS, Inc. All rights reserved.
-# SPDX-License-Identifier: MIT
-
 """PEP 517/660 hooks that compile layout shaders and delegate packaging to Flit."""
 
 import os

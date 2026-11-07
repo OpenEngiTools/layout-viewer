@@ -1,6 +1,3 @@
-# Copyright (C) 2023 - 2026 Synopsys, Inc. and ANSYS, Inc. All rights reserved.
-# SPDX-License-Identifier: MIT
-
 """Refresh ignored local RHI shader packs for source-tree development.
 
 Run ``python tools/bake_viewer_shaders.py`` after changing shader sources.

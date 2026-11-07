@@ -1,9 +1,3 @@
-// Copyright (C) 2023 - 2026 Synopsys, Inc. and ANSYS, Inc. All rights reserved.
-// SPDX-License-Identifier: MIT
-#version 440
-#extension GL_GOOGLE_include_directive : require
-#include "uniforms.glsl"
-#include "common.glsl"
 
 layout(location = 0) in vec4 start_split;
 layout(location = 1) in vec4 end_split;

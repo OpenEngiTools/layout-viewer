@@ -1,6 +1,3 @@
-# Copyright (C) 2023 - 2026 Synopsys, Inc. and ANSYS, Inc. All rights reserved.
-# SPDX-License-Identifier: MIT
-
 """Resident layout geometry rendered through Qt RHI.
 
 Separate stencil bits preserve exterior/hole ownership. Analytic primitives

@@ -1,6 +1,3 @@
-# Copyright (C) 2023 - 2026 Synopsys, Inc. and ANSYS, Inc. All rights reserved.
-# SPDX-License-Identifier: MIT
-
 """A canvas-owned, nonmodal property card for the picked source object."""
 
 from __future__ import annotations

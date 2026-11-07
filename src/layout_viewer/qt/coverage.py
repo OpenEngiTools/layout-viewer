@@ -1,6 +1,3 @@
-# Copyright (C) 2023 - 2026 Synopsys, Inc. and ANSYS, Inc. All rights reserved.
-# SPDX-License-Identifier: MIT
-
 """Resident analytic packets and network palette for RHI mark/cover passes."""
 
 import numpy as np

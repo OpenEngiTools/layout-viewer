@@ -1,7 +1,3 @@
-// Copyright (C) 2023 - 2026 Synopsys, Inc. and ANSYS, Inc. All rights reserved.
-// SPDX-License-Identifier: MIT
-
-// Shared std140 layout. Keep offsets synchronized with qt/rhi.py.
 layout(std140, binding = 0) uniform Frame {
     mat4 clip_corr;
     vec4 camera_split;
