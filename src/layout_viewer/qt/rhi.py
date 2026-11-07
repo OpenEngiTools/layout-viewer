@@ -1,6 +1,3 @@
-# Copyright (C) 2023 - 2026 Synopsys, Inc. and ANSYS, Inc. All rights reserved.
-# SPDX-License-Identifier: MIT
-
 """Portable RHI resources and frame recording for the layout renderer.
 
 Only Vulkan, Direct3D 11 and Metal are selected. Uniforms use an aligned arena:

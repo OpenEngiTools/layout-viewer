@@ -1,6 +1,3 @@
-# Copyright (C) 2023 - 2026 Synopsys, Inc. and ANSYS, Inc. All rights reserved.
-# SPDX-License-Identifier: MIT
-
 """Detached object picking: spatial broad phase and geometry-exact narrow phase."""
 
 from __future__ import annotations

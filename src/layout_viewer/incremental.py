@@ -1,6 +1,3 @@
-# Copyright (C) 2023 - 2026 Synopsys, Inc. and ANSYS, Inc. All rights reserved.
-# SPDX-License-Identifier: MIT
-
 """Immutable geometry tails for incremental uploads of live layout edits."""
 
 from bisect import bisect_right
