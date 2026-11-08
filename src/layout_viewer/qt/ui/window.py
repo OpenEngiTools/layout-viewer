@@ -28,11 +28,11 @@ from PySide6.QtWidgets import (
 
 from layout_viewer.mesh import prepare_scene
 from layout_viewer.progress import throttle_progress
-from layout_viewer.qt.canvas import LayoutView
-from layout_viewer.qt.icons import workspace_icon
-from layout_viewer.qt.navigation import NavigationCapsule
-from layout_viewer.qt.panels import ElidedLabel, LayerPanel, NetworkPanel
-from layout_viewer.qt.theme import COLORS, apply_viewer_theme
+from layout_viewer.qt.ui.icons import workspace_icon
+from layout_viewer.qt.ui.navigation import NavigationCapsule
+from layout_viewer.qt.ui.panels import ElidedLabel, LayerPanel, NetworkPanel
+from layout_viewer.qt.ui.theme import COLORS, apply_viewer_theme
+from layout_viewer.qt.view.canvas import LayoutView
 from layout_viewer.scene import union_bounds
 
 if TYPE_CHECKING:
@@ -76,9 +76,9 @@ class _Prepare(QRunnable):
         try:
             progress = throttle_progress(self.signals.progress.emit)
             if self.loader is not None:
-                # Only immutable geometry enters the CPU worker. The EDB
-                # session remains on this single source-reading thread.
-                with ThreadPoolExecutor(max_workers=1, thread_name_prefix="pyedb-mesh") as executor:
+                # Only immutable geometry enters the CPU worker. The source
+                # remains on this single source-reading thread.
+                with ThreadPoolExecutor(max_workers=1, thread_name_prefix="layout-source") as executor:
                     self._preview_executor = executor
                     if self.previews and hasattr(self.loader, "set_preview"):
                         self.loader.set_preview(self._queue_preview)
@@ -152,7 +152,7 @@ class LayoutWindow(QMainWindow):
 
     Signals report user interaction to application code; the public methods drive
     the view. Call methods on the GUI thread. Picked objects are detached
-    ``PickedObject`` values and never query EDB.
+    ``PickedObject``     values and never query the source.
     """
 
     scene_ready = Signal(object)
@@ -212,7 +212,7 @@ class LayoutWindow(QMainWindow):
 
             self._unsubscribe = self._source.changes.subscribe(changed)
         apply_viewer_theme(self)
-        self.setWindowTitle(f"{scene.title} — PyEDB Layout Viewer")
+        self.setWindowTitle(f"{scene.title} — Layout Viewer")
         self.resize(1280, 800)
         self.setMinimumSize(640, 400)
         self.canvas = LayoutView(scene, self, backend=backend)
@@ -292,7 +292,7 @@ class LayoutWindow(QMainWindow):
             if scene.layers
             else set()
         )
-        self.setWindowTitle(f"{scene.title} — PyEDB Layout Viewer")
+        self.setWindowTitle(f"{scene.title} — Layout Viewer")
         self.project_title.setText(scene.title)
         if not preserve_view or scene.layers != previous_scene.layers:
             self._set_layer_panel(scene)
@@ -347,7 +347,7 @@ class LayoutWindow(QMainWindow):
         self._finish_preparation()
 
     def refresh(self) -> None:
-        """Asynchronously recapture the EDB session, preserving the current view.
+        """Asynchronously recapture the source session, preserving the current view.
 
         Repeated requests during a capture are merged into one subsequent
         refresh. ``refresh_finished(scene)`` fires after geometry and picking
@@ -357,9 +357,9 @@ class LayoutWindow(QMainWindow):
         if self._closed:
             raise RuntimeError("The layout viewer is closed.")
         if self._source is None:
-            raise RuntimeError("Refresh requires a viewer opened from an EDB session.")
+            raise RuntimeError("Refresh requires a viewer opened from a refreshable source.")
         if self._source.changes.closed:
-            raise RuntimeError("The source EDB session is closed.")
+            raise RuntimeError("The source session is closed.")
         self._pending_refresh = True
         self._pending_full_refresh = True
         self._refresh_timer.stop()
@@ -370,10 +370,10 @@ class LayoutWindow(QMainWindow):
         """Group geometry edits into one notification and exclude viewer reads.
 
         Use as a context manager on the modeling thread. This batches updates;
-        it does not roll back EDB edits if an exception occurs.
+        it does not roll back source edits if an exception occurs.
         """
         if self._closed or self._source is None:
-            raise RuntimeError("Batch updates require an open EDB-backed viewer.")
+            raise RuntimeError("Batch updates require an open source-backed viewer.")
         return self._source.changes.batch()
 
     def stop_live(self) -> None:
@@ -433,7 +433,7 @@ class LayoutWindow(QMainWindow):
     def run_script(self, callback: Callable, *args, **kwargs) -> None:
         """Run one modeling callback off the GUI thread, keeping rendering active.
 
-        The callback may edit EDB and use ``batch_update()`` but must not access
+        The callback may edit the source and use ``batch_update()`` but must not access
         Qt widgets. Results/errors are emitted on ``script_finished`` and
         ``script_failed``. Run the Qt event loop after scheduling the callback.
         """
@@ -473,7 +473,7 @@ class LayoutWindow(QMainWindow):
         mark.setAlignment(Qt.AlignmentFlag.AlignCenter)
         mark.setPixmap(workspace_icon("pcb", COLORS["accent"]).pixmap(QSize(27, 27)))
         header.addWidget(mark)
-        brand = QLabel("PyEDB")
+        brand = QLabel("Layout Viewer")
         brand.setProperty("role", "brand")
         header.addWidget(brand)
         header.addSeparator()

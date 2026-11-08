@@ -6,7 +6,7 @@ import shutil
 import subprocess
 import tempfile
 
-SHADER_DIRECTORY = Path("src/layout_viewer/qt/shaders")
+SHADER_DIRECTORY = Path("src/layout_viewer/qt/render/shaders")
 QSB_REQUIREMENT = "PySide6>=6.8.3,<7"
 
 
@@ -14,7 +14,7 @@ def _compiler():
     """Locate a supplied Qt compiler or the compiler shipped with PySide6."""
     env = os.environ.copy()
     env["QT_QPA_PLATFORM"] = "offscreen"
-    supplied = env.get("PYEDB_QSB")
+    supplied = env.get("LAYOUT_VIEWER_QSB")
     if supplied:
         qsb = Path(supplied).expanduser().resolve()
     else:
@@ -23,7 +23,7 @@ def _compiler():
         except ImportError as exc:
             raise RuntimeError(
                 "Building the layout shaders requires PySide6. Use a PEP 517 build frontend, "
-                "install PySide6 for a non-isolated build, or set PYEDB_QSB to a Qt qsb executable."
+                "install PySide6 for a non-isolated build, or set LAYOUT_VIEWER_QSB to a Qt qsb executable."
             ) from exc
         qt = Path(PySide6.__file__).parent
         qsb = qt / ("qsb.exe" if os.name == "nt" else "qsb")

@@ -60,7 +60,7 @@ class SourceCapture:
         """
         with self.changes.lock:
             if self.changes.closed:
-                raise RuntimeError("The source EDB session is closed.")
+                raise RuntimeError("The source session is closed.")
             delta = self.changes.since(self.revision)
             if not full and previous is not None and self.delta_loader is not None and not delta.full:
                 changed = frozenset(key for key, _ in delta.upserts) | delta.removed

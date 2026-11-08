@@ -18,7 +18,7 @@ from layout_viewer.scene import (
 )
 
 if TYPE_CHECKING:
-    from layout_viewer.qt.window import LayoutWindow
+    from layout_viewer.qt.ui.window import LayoutWindow
 
 __version__ = "0.1.0"
 

@@ -130,7 +130,7 @@ class PickObject:
 class PickedObject:
     """Detached identity of a picked object: source properties and the picked layer.
 
-    ``info.object_id`` is the source EDB object id; no live EDB object is held.
+    ``info.object_id`` is the source object id; no live source object is held.
     """
 
     info: SceneObjectInfo

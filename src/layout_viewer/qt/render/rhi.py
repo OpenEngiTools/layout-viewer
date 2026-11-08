@@ -37,6 +37,7 @@ from PySide6.support import VoidPtr
 from layout_viewer.mesh import split_coordinates
 
 UNIFORM_SIZE = 256
+SHADER_DIRECTORY = Path(__file__).resolve().parent / "shaders"
 
 
 def allocate_geometry_buffer(rhi, usage, size):
@@ -57,7 +58,7 @@ def upload_geometry_buffer(updates, buffer, offset, data):
 def graphics_api(backend=None, platform=None):
     """Resolve an explicit, platform-compatible backend without a graphics device."""
     platform = sys.platform if platform is None else platform
-    name = backend or os.environ.get("PYEDB_VIEWER_BACKEND", "auto")
+    name = backend or os.environ.get("LAYOUT_VIEWER_BACKEND", "auto")
     name = name.lower()
     if name == "auto":
         name = "d3d11" if platform == "win32" else "metal" if platform == "darwin" else "vulkan"
@@ -177,7 +178,7 @@ class Device:
 
     def shader(self, name):
         if name not in self.shaders:
-            path = Path(__file__).with_name("shaders") / f"{name}.qsb"
+            path = SHADER_DIRECTORY / f"{name}.qsb"
             if not path.is_file():
                 raise RuntimeError(
                     "Layout shader packs are missing. Install a built wheel or run "

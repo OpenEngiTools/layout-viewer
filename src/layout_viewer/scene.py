@@ -1,12 +1,12 @@
 
-"""Immutable layout snapshots, independent of EDB, Qt and graphics APIs. Coordinates are millimeters."""
+"""Immutable layout snapshots, independent of source applications, Qt and graphics APIs. Coordinates are millimeters."""
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from functools import cached_property
 import math
-from typing import Any, Iterable, Iterator, Sequence
+from typing import Any, Iterable, Iterator, Literal, Sequence
 
 Point = tuple[float, float]
 Ring = tuple[Point, ...]
@@ -45,8 +45,10 @@ def clean_ring(points: Iterable[Iterable[float]]) -> Ring:
 class SceneLayer:
     """Layer name and display-space RGBA color in the range zero to one."""
 
-    name: str
-    color: tuple[float, float, float, float]
+    name: str = field(metadata={"description": "Layer name."})
+    color: tuple[float, float, float, float] = field(
+        metadata={"description": "Display-space RGBA color, with each channel between zero and one."}
+    )
 
     def __post_init__(self) -> None:
         color = tuple(float(v) for v in self.color)
@@ -57,18 +59,40 @@ class SceneLayer:
 
 @dataclass(frozen=True)
 class ScenePolygon:
-    """One source object's exterior and independent subtractive holes."""
+    """One source object's exterior and independent subtractive holes.
 
-    object_id: int
-    layer: str
-    net: str | None
-    exterior: Ring
-    holes: tuple[Ring, ...] = ()
-    component: str | None = None
-    component_layer: str | None = None
-    component_side: str = "top"
-    pin_name: str | None = None
-    category: str = "zone"
+    ``exterior`` and ``holes`` are closed implicitly; do not repeat the first
+    point at the end. Points use board coordinates in millimeters.
+    """
+
+    object_id: int = field(metadata={"description": "Identifier of the source layout object."})
+    layer: str = field(metadata={"description": "Physical layer containing this polygon."})
+    net: str | None = field(metadata={"description": "Connected net name, or None if the polygon has no net."})
+    exterior: Ring = field(metadata={"description": "Exterior contour in board coordinates, in millimeters."})
+    holes: tuple[Ring, ...] = field(
+        default=(),
+        metadata={"description": "Subtractive contours in board coordinates, in millimeters."},
+    )
+    component: str | None = field(
+        default=None,
+        metadata={"description": "Owning component reference, or None if the polygon is not a component pin."},
+    )
+    component_layer: str | None = field(
+        default=None,
+        metadata={"description": "Owning component's placement layer; defaults to layer when component is set."},
+    )
+    component_side: str = field(
+        default="top",
+        metadata={"description": "Board side of the owning component: top or bottom."},
+    )
+    pin_name: str | None = field(
+        default=None,
+        metadata={"description": "Pin name or number, if this polygon represents a component pin."},
+    )
+    category: str = field(
+        default="zone",
+        metadata={"description": "Polygon category: zone, trace or pad."},
+    )
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "exterior", clean_ring(self.exterior))
@@ -81,11 +105,13 @@ class ScenePolygon:
 
     @cached_property
     def bounds(self) -> Bounds:
+        """Return the axis-aligned bounds of the exterior contour."""
         x, y = zip(*self.exterior)
         return min(x), min(y), max(x), max(y)
 
 
 def _point(point: Iterable[float]) -> Point:
+    """Convert a coordinate pair to finite floating-point values."""
     result = tuple(float(v) for v in point)
     if len(result) != 2 or not all(math.isfinite(v) for v in result):
         raise ValueError("Coordinates must contain two finite values.")
@@ -93,6 +119,7 @@ def _point(point: Iterable[float]) -> Point:
 
 
 def _validate_pin_owner(item: Any) -> None:
+    """Validate component ownership metadata and default its layer."""
     if item.component is None:
         return
     if not isinstance(item.component, str) or not item.component:
@@ -111,15 +138,24 @@ class SceneTrace:
     ``center``. Geometry stays analytic at every zoom level.
     """
 
-    object_id: int
-    layer: str
-    net: str | None
-    start: Point
-    end: Point
-    width: float
-    center: Point | None = None
-    sweep: float = 0.0
-    end_caps: tuple[str, str] = ("round", "round")
+    object_id: int = field(metadata={"description": "Identifier of the source layout object."})
+    layer: str = field(metadata={"description": "Physical layer containing this trace."})
+    net: str | None = field(metadata={"description": "Connected net name, or None if the trace has no net."})
+    start: Point = field(metadata={"description": "Trace start point in board coordinates, in millimeters."})
+    end: Point = field(metadata={"description": "Trace end point in board coordinates, in millimeters."})
+    width: float = field(metadata={"description": "Trace width in millimeters."})
+    center: Point | None = field(
+        default=None,
+        metadata={"description": "Arc center in board coordinates; None represents a straight segment."},
+    )
+    sweep: float = field(
+        default=0.0,
+        metadata={"description": "Signed arc sweep in radians; positive values are counterclockwise."},
+    )
+    end_caps: tuple[str, str] = field(
+        default=("round", "round"),
+        metadata={"description": "Start and end cap styles: round, flat or extended."},
+    )
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "start", _point(self.start))
@@ -146,6 +182,7 @@ class SceneTrace:
 
     @cached_property
     def bounds(self) -> Bounds:
+        """Return bounds including the stroke width and end-cap extension."""
         radius = self.width / 2
         if self.center is None:
             # Square caps at diagonal angles can extend by sqrt(2) * radius.
@@ -181,20 +218,44 @@ class ScenePad:
     boundaries can be emphasized independently of same-colored copper.
     """
 
-    object_id: int
-    layer: str
-    net: str | None
-    center: Point
-    size: Point
-    shape: str = "circle"
-    rotation: float = 0.0
-    corner_radius: float = 0.0
-    hole_radius: float = 0.0
-    hole_center: Point | None = None
-    component: str | None = None
-    component_layer: str | None = None
-    component_side: str = "top"
-    pin_name: str | None = None
+    object_id: int = field(metadata={"description": "Identifier of the source layout object."})
+    layer: str = field(metadata={"description": "Physical layer containing this pad."})
+    net: str | None = field(metadata={"description": "Connected net name, or None if the pad has no net."})
+    center: Point = field(metadata={"description": "Pad center in board coordinates, in millimeters."})
+    size: Point = field(metadata={"description": "Full pad width and height in millimeters."})
+    shape: str = field(
+        default="circle",
+        metadata={"description": "Pad shape: circle, rectangle, oval or bullet."},
+    )
+    rotation: float = field(default=0.0, metadata={"description": "Pad rotation in radians."})
+    corner_radius: float = field(
+        default=0.0,
+        metadata={"description": "Rounded-corner radius in millimeters."},
+    )
+    hole_radius: float = field(
+        default=0.0,
+        metadata={"description": "Circular drill radius in millimeters; zero means no drill."},
+    )
+    hole_center: Point | None = field(
+        default=None,
+        metadata={"description": "Drill center in board coordinates, in millimeters; defaults to center."},
+    )
+    component: str | None = field(
+        default=None,
+        metadata={"description": "Owning component reference, or None for a non-component pad."},
+    )
+    component_layer: str | None = field(
+        default=None,
+        metadata={"description": "Owning component's placement layer; defaults to layer when component is set."},
+    )
+    component_side: str = field(
+        default="top",
+        metadata={"description": "Board side of the owning component: top or bottom."},
+    )
+    pin_name: str | None = field(
+        default=None,
+        metadata={"description": "Pin name or number, if this pad represents a component pin."},
+    )
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "center", _point(self.center))
@@ -214,6 +275,7 @@ class ScenePad:
 
     @cached_property
     def bounds(self) -> Bounds:
+        """Return bounds covering both the pad body and its drill."""
         c, s = abs(math.cos(self.rotation)), abs(math.sin(self.rotation))
         x, y = self.center
         if self.shape == "circle":
@@ -229,10 +291,12 @@ class ScenePad:
 class SceneJoin:
     """Convex analytic triangle/quad joining SDF trace segments without seams."""
 
-    object_id: int
-    layer: str
-    net: str | None
-    points: tuple[Point, ...]
+    object_id: int = field(metadata={"description": "Identifier of the source layout object."})
+    layer: str = field(metadata={"description": "Physical layer containing this join."})
+    net: str | None = field(metadata={"description": "Connected net name, or None if the join has no net."})
+    points: tuple[Point, ...] = field(
+        metadata={"description": "Three or four convex join vertices in board coordinates, in millimeters."}
+    )
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "points", tuple(_point(p) for p in self.points))
@@ -241,24 +305,31 @@ class SceneJoin:
 
     @cached_property
     def bounds(self) -> Bounds:
+        """Return the axis-aligned bounds of the join vertices."""
         x, y = zip(*self.points)
         return min(x), min(y), max(x), max(y)
 
 
 @dataclass(frozen=True)
 class SceneComponent:
-    """PyEDB component bounding box and reference, already in board coordinates.
+    """Component bounding box and reference, already in board coordinates.
 
     Match ``nets.plot``: the envelope is axis-aligned and must not be rotated
     again. Nets describe membership of the whole component, rather than one pin.
+    Bounds use millimeters in ``(xmin, ymin, xmax, ymax)`` order.
     """
 
-    object_id: int
-    reference: str
-    layer: str
-    nets: tuple[str, ...]
-    bounds: Bounds
-    side: str = "top"
+    object_id: int = field(metadata={"description": "Identifier of the source component."})
+    reference: str = field(metadata={"description": "Component reference designator."})
+    layer: str = field(metadata={"description": "Physical layer containing the component envelope."})
+    nets: tuple[str, ...] = field(metadata={"description": "Net names connected to the component."})
+    bounds: Bounds = field(
+        metadata={"description": "Axis-aligned component bounds in millimeters: (xmin, ymin, xmax, ymax)."}
+    )
+    side: str = field(
+        default="top",
+        metadata={"description": "Board side containing the component: top or bottom."},
+    )
 
     def __post_init__(self) -> None:
         bounds = tuple(float(v) for v in self.bounds)
@@ -296,17 +367,31 @@ class SceneObjectInfo:
     centerline, including analytic arcs, without adding end-cap extensions.
     """
 
-    object_id: int
-    kind: str
-    net: str | None = None
-    width: float | None = None
-    length: float | None = None
-    drill_diameter: float | None = None
-    start_layer: str | None = None
-    stop_layer: str | None = None
-    component: str | None = None
-    pin_name: str | None = None
-    name: str | None = None
+    object_id: int = field(metadata={"description": "Identifier of the source layout object."})
+    kind: Literal["trace", "via", "pad", "zone"] = field(
+        metadata={"description": "Selectable object kind: trace, via, pad or zone."}
+    )
+    net: str | None = field(default=None, metadata={"description": "Connected net name, if any."})
+    width: float | None = field(
+        default=None,
+        metadata={"description": "Object width in millimeters, if applicable."},
+    )
+    length: float | None = field(
+        default=None,
+        metadata={"description": "Object centerline length in millimeters, if applicable."},
+    )
+    drill_diameter: float | None = field(
+        default=None,
+        metadata={"description": "Drill diameter in millimeters, if applicable."},
+    )
+    start_layer: str | None = field(default=None, metadata={"description": "Starting layer of a via, if applicable."})
+    stop_layer: str | None = field(default=None, metadata={"description": "Ending layer of a via, if applicable."})
+    component: str | None = field(
+        default=None,
+        metadata={"description": "Owning component reference, if applicable."},
+    )
+    pin_name: str | None = field(default=None, metadata={"description": "Pin name or number, if applicable."})
+    name: str | None = field(default=None, metadata={"description": "Source object name, if available."})
 
     def __post_init__(self) -> None:
         if self.kind not in {"trace", "via", "pad", "zone"}:
@@ -319,18 +404,27 @@ class SceneObjectInfo:
 
 @dataclass(frozen=True)
 class LayoutScene:
-    """Detached snapshot; layer order is top to bottom, matching EDB stackup order."""
+    """Detached snapshot; layer order is top to bottom, matching board stackup order."""
 
-    layers: tuple[SceneLayer, ...]
-    polygons: tuple[ScenePolygon, ...]
-    title: str = "EDB layout"
-    diagnostics: tuple[str, ...] = ()
-    traces: tuple[SceneTrace, ...] = ()
-    pads: tuple[ScenePad, ...] = ()
-    joins: tuple[SceneJoin, ...] = ()
-    net_names: tuple[str, ...] = ()
-    components: tuple[SceneComponent, ...] = ()
-    object_info: tuple[SceneObjectInfo, ...] = ()
+    layers: tuple[SceneLayer, ...] = field(metadata={"description": "Board layers in top-to-bottom stackup order."})
+    polygons: tuple[ScenePolygon, ...] = field(metadata={"description": "Polygon geometry in the scene."})
+    title: str = field(default="PCB layout", metadata={"description": "Scene or board title."})
+    diagnostics: tuple[str, ...] = field(
+        default=(),
+        metadata={"description": "Non-fatal messages produced while creating the scene."},
+    )
+    traces: tuple[SceneTrace, ...] = field(default=(), metadata={"description": "Analytic trace geometry."})
+    pads: tuple[ScenePad, ...] = field(default=(), metadata={"description": "Pad geometry."})
+    joins: tuple[SceneJoin, ...] = field(default=(), metadata={"description": "Join geometry between trace segments."})
+    net_names: tuple[str, ...] = field(default=(), metadata={"description": "Net names represented in the scene."})
+    components: tuple[SceneComponent, ...] = field(
+        default=(),
+        metadata={"description": "Component envelopes shown as separate overlays."},
+    )
+    object_info: tuple[SceneObjectInfo, ...] = field(
+        default=(),
+        metadata={"description": "Source properties of selectable objects."},
+    )
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "layers", tuple(self.layers))
@@ -355,6 +449,7 @@ class LayoutScene:
 
     @cached_property
     def bounds(self) -> Bounds | None:
+        """Return bounds of all geometry and component envelopes, or None if empty."""
         bounds = [item.bounds for item in self.geometry]
         bounds.extend(component.bounds for component in self.components)
         return union_bounds(bounds)

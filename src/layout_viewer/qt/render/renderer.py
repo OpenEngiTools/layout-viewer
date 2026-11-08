@@ -17,10 +17,10 @@ from layout_viewer.colors import (
     SELECTION_COLOR,
     net_color,
 )
-from layout_viewer.qt.component_labels import ComponentLabels
-from layout_viewer.qt.coverage import SdfCoverage
-from layout_viewer.qt.grid import GridRenderer
-from layout_viewer.qt.rhi import Device, Target, camera_uniforms
+from layout_viewer.qt.render.component_labels import ComponentLabels
+from layout_viewer.qt.render.coverage import SdfCoverage
+from layout_viewer.qt.render.grid import GridRenderer
+from layout_viewer.qt.render.rhi import Device, Target, camera_uniforms
 from layout_viewer.scene import ScenePolygon
 
 

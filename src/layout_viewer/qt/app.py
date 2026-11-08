@@ -1,5 +1,5 @@
 
-"""Application lifecycle, separate from EDB session ownership."""
+"""Application lifecycle, separate from source session ownership."""
 
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ import threading
 from PySide6.QtCore import QCoreApplication, QEventLoop, Qt, QThread
 from PySide6.QtWidgets import QApplication
 
-from layout_viewer.qt.window import LayoutWindow
+from layout_viewer.qt.ui.window import LayoutWindow
 from layout_viewer.scene import LayoutScene
 
 # Check triangulation support before creating QApplication.
@@ -50,7 +50,7 @@ def show_scene(
     plot_outlines: bool = True,
     *,
     loader: Callable[..., LayoutScene] | None = None,
-    title: str = "EDB layout",
+    title: str = "PCB layout",
     backend: str | None = None,
     live: bool = False,
     refresh_interval: int = 50,

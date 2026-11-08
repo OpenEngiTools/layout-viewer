@@ -19,8 +19,8 @@ from PySide6.QtWidgets import (
 )
 
 from layout_viewer.picking import inspector_rows
-from layout_viewer.qt.icons import workspace_icon
-from layout_viewer.qt.theme import COLORS
+from layout_viewer.qt.ui.icons import workspace_icon
+from layout_viewer.qt.ui.theme import COLORS
 
 if TYPE_CHECKING:
     from layout_viewer.picking import PickHit
