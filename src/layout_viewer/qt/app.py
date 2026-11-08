@@ -11,7 +11,7 @@ import threading
 from PySide6.QtCore import QCoreApplication, QEventLoop, Qt, QThread
 from PySide6.QtWidgets import QApplication
 
-from layout_viewer.qt.window import LayoutWindow
+from layout_viewer.qt.ui.window import LayoutWindow
 from layout_viewer.scene import LayoutScene
 
 # Check triangulation support before creating QApplication.

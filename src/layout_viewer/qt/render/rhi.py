@@ -37,6 +37,7 @@ from PySide6.support import VoidPtr
 from layout_viewer.mesh import split_coordinates
 
 UNIFORM_SIZE = 256
+SHADER_DIRECTORY = Path(__file__).resolve().parent / "shaders"
 
 
 def allocate_geometry_buffer(rhi, usage, size):
@@ -177,7 +178,7 @@ class Device:
 
     def shader(self, name):
         if name not in self.shaders:
-            path = Path(__file__).with_name("shaders") / f"{name}.qsb"
+            path = SHADER_DIRECTORY / f"{name}.qsb"
             if not path.is_file():
                 raise RuntimeError(
                     "Layout shader packs are missing. Install a built wheel or run "

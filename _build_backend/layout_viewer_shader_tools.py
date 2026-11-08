@@ -6,7 +6,7 @@ import shutil
 import subprocess
 import tempfile
 
-SHADER_DIRECTORY = Path("src/layout_viewer/qt/shaders")
+SHADER_DIRECTORY = Path("src/layout_viewer/qt/render/shaders")
 QSB_REQUIREMENT = "PySide6>=6.8.3,<7"
 
 

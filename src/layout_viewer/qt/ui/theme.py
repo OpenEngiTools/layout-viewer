@@ -26,13 +26,24 @@ COLORS = {
 
 def apply_viewer_theme(window: QWidget) -> None:
     """Style this window without changing other windows in an embedded QApplication."""
-    families = set(QFontDatabase.families())
-    family = next(
-        (name for name in ("Segoe UI Variable", "Segoe UI", "Inter", "Noto Sans") if name in families), "Sans Serif"
+    families = QFontDatabase.families()
+    preferred = (
+        "SF Pro Display",
+        "Segoe UI Variable",
+        "Segoe UI",
+        "Inter",
+        "Noto Sans",
+        "Helvetica Neue",
+        "Arial",
+        "DejaVu Sans",
+        "Liberation Sans",
+        "sans-serif",
     )
+    family = next((name for name in preferred if name in families), families[0] if families else "Helvetica")
     font = QFont(family)
     font.setPixelSize(13)
     window.setFont(font)
+    fixed_font_family = QFontDatabase.systemFont(QFontDatabase.SystemFont.FixedFont).family()
     palette = QPalette(window.palette())
     for role, token in (
         (QPalette.ColorRole.Window, "panel"),
@@ -59,7 +70,7 @@ def apply_viewer_theme(window: QWidget) -> None:
     window.setStyleSheet(f"""
         QMainWindow {{ background: {c["window"]}; }}
         QWidget {{ color: {c["text"]}; font-family: "{family}"; font-size: 13px; }}
-        QLabel#coordinateReadout {{ font-family: "Consolas", monospace; font-size: 11px; }}
+        QLabel#coordinateReadout {{ font-family: "{fixed_font_family}"; font-size: 11px; }}
         QLabel {{ background: transparent; border: none; }}
         QLabel[role="muted"] {{ color: {c["muted"]}; font-size: 12px; }}
         QLabel[role="eyebrow"] {{ color: {c["muted"]}; font-size: 10px; font-weight: 600; }}

@@ -20,11 +20,11 @@ from PySide6.QtWidgets import QLabel, QRhiWidget, QWidget
 
 from layout_viewer.camera import Camera
 from layout_viewer.picking import PickHit
-from layout_viewer.qt.inspector import ObjectInspector
-from layout_viewer.qt.loading import LoadingPanel
-from layout_viewer.qt.renderer import Renderer
-from layout_viewer.qt.rhi import graphics_api
-from layout_viewer.qt.theme import COLORS
+from layout_viewer.qt.ui.inspector import ObjectInspector
+from layout_viewer.qt.ui.loading import LoadingPanel
+from layout_viewer.qt.render.renderer import Renderer
+from layout_viewer.qt.render.rhi import graphics_api
+from layout_viewer.qt.ui.theme import COLORS
 
 if TYPE_CHECKING:
     from layout_viewer.mesh import PreparedScene

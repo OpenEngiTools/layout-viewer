@@ -28,11 +28,11 @@ from PySide6.QtWidgets import (
 
 from layout_viewer.mesh import prepare_scene
 from layout_viewer.progress import throttle_progress
-from layout_viewer.qt.canvas import LayoutView
-from layout_viewer.qt.icons import workspace_icon
-from layout_viewer.qt.navigation import NavigationCapsule
-from layout_viewer.qt.panels import ElidedLabel, LayerPanel, NetworkPanel
-from layout_viewer.qt.theme import COLORS, apply_viewer_theme
+from layout_viewer.qt.render.canvas import LayoutView
+from layout_viewer.qt.ui.icons import workspace_icon
+from layout_viewer.qt.ui.navigation import NavigationCapsule
+from layout_viewer.qt.ui.panels import ElidedLabel, LayerPanel, NetworkPanel
+from layout_viewer.qt.ui.theme import COLORS, apply_viewer_theme
 from layout_viewer.scene import union_bounds
 
 if TYPE_CHECKING:
