@@ -4,7 +4,7 @@ build-backend = "layout_viewer_build"
 backend-path = ["_build_backend"]
 
 [tool.flit.sdist]
-include = ["_build_backend"]
+include = ["_build_backend", "README.md", "LICENSE"]
 exclude = ["_build_backend/__pycache__"]
 
 [tool.flit.module]

@@ -38,7 +38,7 @@ show_scene(scene)
 Run the synthetic demo board:
 
 ```bash
-python -m layout_viewer --backend vulkan
+python -m layout_viewer
 ```
 
 ## Architecture
