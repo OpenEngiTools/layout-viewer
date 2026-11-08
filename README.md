@@ -11,6 +11,30 @@ from layout_viewer.demo import demo_scene
 show_scene(demo_scene())
 ```
 
+## Create a scene
+
+Build a scene from layers and geometry, then pass it to `show_scene`:
+
+```python
+from layout_viewer import LayoutScene, SceneLayer, ScenePolygon, SceneTrace, show_scene
+
+scene = LayoutScene(
+    layers=(SceneLayer("F.Cu", (0.95, 0.61, 0.20, 1.0)),),
+    polygons=(
+        ScenePolygon(
+            object_id=1,
+            layer="F.Cu",
+            net="GND",
+            exterior=((0, 0), (40, 0), (40, 25), (0, 25)),
+        ),
+    ),
+    title="My board",
+    traces=(SceneTrace(2, "F.Cu", "SIGNAL", (5, 5), (30, 15), 0.5),),
+)
+
+show_scene(scene)
+```
+
 Run the synthetic demo board:
 
 ```bash
