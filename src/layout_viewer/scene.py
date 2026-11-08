@@ -1,5 +1,5 @@
 
-"""Immutable layout snapshots, independent of EDB, Qt and graphics APIs. Coordinates are millimeters."""
+"""Immutable layout snapshots, independent of source applications, Qt and graphics APIs. Coordinates are millimeters."""
 
 from __future__ import annotations
 
@@ -247,7 +247,7 @@ class SceneJoin:
 
 @dataclass(frozen=True)
 class SceneComponent:
-    """PyEDB component bounding box and reference, already in board coordinates.
+    """Component bounding box and reference, already in board coordinates.
 
     Match ``nets.plot``: the envelope is axis-aligned and must not be rotated
     again. Nets describe membership of the whole component, rather than one pin.
@@ -319,11 +319,11 @@ class SceneObjectInfo:
 
 @dataclass(frozen=True)
 class LayoutScene:
-    """Detached snapshot; layer order is top to bottom, matching EDB stackup order."""
+    """Detached snapshot; layer order is top to bottom, matching board stackup order."""
 
     layers: tuple[SceneLayer, ...]
     polygons: tuple[ScenePolygon, ...]
-    title: str = "EDB layout"
+    title: str = "PCB layout"
     diagnostics: tuple[str, ...] = ()
     traces: tuple[SceneTrace, ...] = ()
     pads: tuple[ScenePad, ...] = ()

@@ -11,7 +11,7 @@ from layout_viewer_shader_tools import QSB_REQUIREMENT, SHADER_DIRECTORY, bake_s
 
 def _compiler_requirements(requirements):
     # A build service can supply its own Qt toolchain instead of downloading PySide6.
-    return requirements if os.environ.get("PYEDB_QSB") else [*requirements, QSB_REQUIREMENT]
+    return requirements if os.environ.get("LAYOUT_VIEWER_QSB") else [*requirements, QSB_REQUIREMENT]
 
 
 def get_requires_for_build_wheel(config_settings=None):

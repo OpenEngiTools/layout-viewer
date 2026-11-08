@@ -1,9 +1,9 @@
 
-"""PyEDB materials shared by the CPU copper pass and GPU analytic primitives."""
+"""PCB material colors shared by the CPU copper pass and GPU analytic primitives."""
 
 from __future__ import annotations
 
-# Matplotlib CSS4 network palette, kept local so the frontend has no pyedb dependency.
+# Matplotlib CSS4 network palette, kept local so the frontend has no extra dependency.
 _CSS4_COLORS = {
     "chocolate": "#D2691E",
     "darkgreen": "#006400",

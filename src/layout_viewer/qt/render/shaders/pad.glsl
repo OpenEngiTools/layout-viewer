@@ -1,7 +1,7 @@
 
-// The MIT notice above applies to PyEDB modifications.
+// The MIT notice above applies to local modifications.
 // The upstream portions retain their original license below.
-// Modified for PyEDB's RHI renderer; see THIRD_PARTY_NOTICES.txt.
+// Modified for the layout viewer's RHI renderer; see THIRD_PARTY_NOTICES.txt.
 
 float pad_distance(vec4 screen) {
     float distance;

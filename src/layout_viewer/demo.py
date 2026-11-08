@@ -1,5 +1,5 @@
 
-"""Small synthetic board for trying the renderer without an EDB license."""
+"""Small synthetic board for trying the renderer without an external data source."""
 
 from __future__ import annotations
 
@@ -53,7 +53,7 @@ def demo_scene() -> LayoutScene:
         tuple(polygons),
         "Synthetic board",
         (
-            "Synthetic millimeter-based scene. No AEDB was opened.",
+            "Synthetic millimeter-based scene; no source file was opened.",
             "The two overlapping TOP voids form a union; lower copper remains visible through both.",
         ),
         traces=tuple(traces),

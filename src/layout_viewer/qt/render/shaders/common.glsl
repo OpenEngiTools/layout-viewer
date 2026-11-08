@@ -1,7 +1,7 @@
 
-// The MIT notice above applies to PyEDB modifications.
+// The MIT notice above applies to local modifications.
 // The upstream portions retain their original license below.
-// Modified for PyEDB's RHI renderer; see THIRD_PARTY_NOTICES.txt.
+// Modified for the layout viewer's RHI renderer; see THIRD_PARTY_NOTICES.txt.
 
 vec2 add_pair(vec2 a, vec2 b) {
     precise float sum = a.x + b.x;

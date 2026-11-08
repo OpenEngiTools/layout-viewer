@@ -58,7 +58,7 @@ def upload_geometry_buffer(updates, buffer, offset, data):
 def graphics_api(backend=None, platform=None):
     """Resolve an explicit, platform-compatible backend without a graphics device."""
     platform = sys.platform if platform is None else platform
-    name = backend or os.environ.get("PYEDB_VIEWER_BACKEND", "auto")
+    name = backend or os.environ.get("LAYOUT_VIEWER_BACKEND", "auto")
     name = name.lower()
     if name == "auto":
         name = "d3d11" if platform == "win32" else "metal" if platform == "darwin" else "vulkan"

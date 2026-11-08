@@ -2,8 +2,7 @@
 
 Interactive 2D PCB layout viewer built on PySide6 and Qt RHI (Direct3D 11, Vulkan, Metal).
 
-The package renders detached `LayoutScene` values and has no EDB dependency. PyEDB
-supplies scenes from EDB sessions through `pyedb.viewer_adapter` (`pip install "pyedb[viewer]"`).
+The package renders detached `LayoutScene` values and is independent of source applications.
 
 ```python
 from layout_viewer import show_scene
@@ -26,7 +25,10 @@ python -m layout_viewer --backend vulkan
   canvas and GPU rendering code is grouped in `qt/render/`.
 - UI SVG assets live in `qt/ui/assets/`. Rendering shaders and their compiled
   packs live in `qt/render/shaders/`.
-- `demo.py` builds a synthetic scene for trying the viewer without an EDB session.
+- `demo.py` builds a synthetic scene for trying the viewer without an external data source.
+
+For the data flow, module responsibilities, development setup, tests, and common
+troubleshooting, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Development
 
@@ -37,7 +39,7 @@ python -m pip install -e .
 ```
 
 Wheel and editable builds compile the RHI shaders in `src/layout_viewer/qt/render/shaders`
-with the Qt `qsb` tool shipped by PySide6 (or the executable named by `PYEDB_QSB`).
+with the Qt `qsb` tool shipped by PySide6 (or the executable named by `LAYOUT_VIEWER_QSB`).
 After editing shader sources in a checkout, refresh the local packs with:
 
 ```bash

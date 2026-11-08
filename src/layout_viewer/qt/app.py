@@ -1,5 +1,5 @@
 
-"""Application lifecycle, separate from EDB session ownership."""
+"""Application lifecycle, separate from source session ownership."""
 
 from __future__ import annotations
 
@@ -50,7 +50,7 @@ def show_scene(
     plot_outlines: bool = True,
     *,
     loader: Callable[..., LayoutScene] | None = None,
-    title: str = "EDB layout",
+    title: str = "PCB layout",
     backend: str | None = None,
     live: bool = False,
     refresh_interval: int = 50,
