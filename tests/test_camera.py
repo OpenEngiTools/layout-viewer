@@ -1,6 +1,6 @@
 import pytest
 
-from layout_viewer.camera import Camera
+from layout_viewer_core.camera import Camera
 
 
 @pytest.mark.parametrize("mirror", [False, True])

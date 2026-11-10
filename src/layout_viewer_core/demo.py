@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import math
 
-from layout_viewer.scene import LayoutScene, SceneComponent, SceneLayer, ScenePad, ScenePolygon, SceneTrace
+from layout_viewer_core.scene import LayoutScene, SceneComponent, SceneLayer, ScenePad, ScenePolygon, SceneTrace
 
 
 def _rectangle(x0: float, y0: float, x1: float, y1: float) -> tuple[tuple[float, float], ...]:

@@ -1,10 +1,10 @@
 from dataclasses import dataclass
 from threading import RLock
 
-from layout_viewer.capture import SourceCapture
-from layout_viewer.mesh import prepare_scene
-from layout_viewer.qt.ui.window import _Prepare
-from layout_viewer.scene import LayoutScene, SceneLayer, SceneObjectInfo, ScenePolygon
+from layout_viewer_core.capture import SourceCapture
+from layout_viewer_core.mesh import prepare_scene
+from layout_viewer_core.qt.ui.window import _Prepare
+from layout_viewer_core.scene import LayoutScene, SceneLayer, SceneObjectInfo, ScenePolygon
 
 
 @dataclass

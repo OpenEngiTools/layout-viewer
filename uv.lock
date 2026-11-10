@@ -38,7 +38,7 @@ wheels = [
 ]
 
 [[package]]
-name = "layout-viewer"
+name = "layout-viewer-core"
 source = { editable = "." }
 dependencies = [
     { name = "mapbox-earcut" },

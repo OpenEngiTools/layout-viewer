@@ -1,5 +1,5 @@
-from layout_viewer.picking import PickIndex
-from layout_viewer.scene import LayoutScene, SceneLayer, ScenePolygon
+from layout_viewer_core.picking import PickIndex
+from layout_viewer_core.scene import LayoutScene, SceneLayer, ScenePolygon
 
 
 def test_pick_index_applies_layer_network_and_opacity_filters(sample_scene) -> None:

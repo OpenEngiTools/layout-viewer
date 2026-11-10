@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from PySide6.QtGui import QShader
 
-from layout_viewer.qt.render.rhi import SHADER_DIRECTORY
+from layout_viewer_core.qt.render.rhi import SHADER_DIRECTORY
 
 
 def test_shader_packs_load_from_qt_shader_directory() -> None:

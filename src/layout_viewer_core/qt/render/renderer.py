@@ -9,7 +9,7 @@ import math
 import numpy as np
 from PySide6.QtGui import QRhiBuffer, QRhiColorAttachment, QRhiTextureRenderTargetDescription
 
-from layout_viewer.colors import (
+from layout_viewer_core.colors import (
     COMPONENT_COLORS,
     DRILL_COLOR,
     HIGHLIGHT_KEYLINE_COLOR,
@@ -17,11 +17,11 @@ from layout_viewer.colors import (
     SELECTION_COLOR,
     net_color,
 )
-from layout_viewer.qt.render.component_labels import ComponentLabels
-from layout_viewer.qt.render.coverage import SdfCoverage
-from layout_viewer.qt.render.grid import GridRenderer
-from layout_viewer.qt.render.rhi import Device, Target, camera_uniforms
-from layout_viewer.scene import ScenePolygon
+from layout_viewer_core.qt.render.component_labels import ComponentLabels
+from layout_viewer_core.qt.render.coverage import SdfCoverage
+from layout_viewer_core.qt.render.grid import GridRenderer
+from layout_viewer_core.qt.render.rhi import Device, Target, camera_uniforms
+from layout_viewer_core.scene import ScenePolygon
 
 
 class Renderer:

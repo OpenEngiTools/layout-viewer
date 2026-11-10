@@ -20,11 +20,11 @@ from PySide6.QtGui import (
 )
 from PySide6.QtWidgets import QFrame, QGraphicsDropShadowEffect, QHBoxLayout, QToolButton
 
-from layout_viewer.qt.ui.icons import layer_icon_path
-from layout_viewer.qt.ui.theme import COLORS
+from layout_viewer_core.qt.ui.icons import layer_icon_path
+from layout_viewer_core.qt.ui.theme import COLORS
 
 if TYPE_CHECKING:
-    from layout_viewer.qt.view.canvas import LayoutView
+    from layout_viewer_core.qt.view.canvas import LayoutView
 
 
 def navigation_icon(name: str) -> QIcon:

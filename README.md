@@ -1,12 +1,12 @@
-# layout-viewer
+# layout-viewer-core
 
 Interactive 2D PCB layout viewer built on PySide6 and Qt RHI (Direct3D 11, Vulkan, Metal).
 
 The package renders detached `LayoutScene` values and is independent of source applications.
 
 ```python
-from layout_viewer import show_scene
-from layout_viewer.demo import demo_scene
+from layout_viewer_core import show_scene
+from layout_viewer_core.demo import demo_scene
 
 show_scene(demo_scene())
 ```
@@ -16,7 +16,7 @@ show_scene(demo_scene())
 Build a scene from layers and geometry, then pass it to `show_scene`:
 
 ```python
-from layout_viewer import LayoutScene, SceneLayer, ScenePolygon, SceneTrace, show_scene
+from layout_viewer_core import LayoutScene, SceneLayer, ScenePolygon, SceneTrace, show_scene
 
 scene = LayoutScene(
     layers=(SceneLayer("F.Cu", (0.95, 0.61, 0.20, 1.0)),),
@@ -38,12 +38,12 @@ show_scene(scene)
 Run the synthetic demo board:
 
 ```bash
-python -m layout_viewer
+python -m layout_viewer_core
 ```
 
 ## Architecture
 
-- Core scene and geometry logic lives in `src/layout_viewer/` (`scene.py`, `mesh.py`,
+- Core scene and geometry logic lives in `src/layout_viewer_core/` (`scene.py`, `mesh.py`,
   `picking.py`, and `camera.py`) and does not depend on Qt.
 - `qt/app.py` bootstraps the application. Qt UI code is grouped in `qt/ui/`;
   canvas and GPU rendering code is grouped in `qt/render/`.
@@ -62,7 +62,7 @@ Install the checkout and its runtime dependencies into the active environment:
 python -m pip install -e .
 ```
 
-Wheel and editable builds compile the RHI shaders in `src/layout_viewer/qt/render/shaders`
+Wheel and editable builds compile the RHI shaders in `src/layout_viewer_core/qt/render/shaders`
 with the Qt `qsb` tool shipped by PySide6 (or the executable named by `LAYOUT_VIEWER_QSB`).
 After editing shader sources in a checkout, refresh the local packs with:
 

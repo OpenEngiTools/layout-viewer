@@ -18,12 +18,12 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from layout_viewer.picking import inspector_rows
-from layout_viewer.qt.ui.icons import workspace_icon
-from layout_viewer.qt.ui.theme import COLORS
+from layout_viewer_core.picking import inspector_rows
+from layout_viewer_core.qt.ui.icons import workspace_icon
+from layout_viewer_core.qt.ui.theme import COLORS
 
 if TYPE_CHECKING:
-    from layout_viewer.picking import PickHit
+    from layout_viewer_core.picking import PickHit
 
 
 class ObjectInspector(QFrame):

@@ -34,7 +34,7 @@ from PySide6.QtGui import (
 from PySide6.QtWidgets import QRhiWidget
 from PySide6.support import VoidPtr
 
-from layout_viewer.mesh import split_coordinates
+from layout_viewer_core.mesh import split_coordinates
 
 UNIFORM_SIZE = 256
 SHADER_DIRECTORY = Path(__file__).resolve().parent / "shaders"

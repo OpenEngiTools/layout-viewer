@@ -13,7 +13,7 @@ uv sync --extra test
 Run the demo using the platform's default graphics backend:
 
 ```bash
-uv run python -m layout_viewer
+uv run python -m layout_viewer_core
 ```
 
 On macOS, `--backend metal` is also available; on Windows, use `--backend d3d11`.
@@ -91,7 +91,7 @@ The tests in `tests/` currently smoke-test Qt theme resources and compiled shade
 packs. Add focused tests for geometry, picking, and scene invariants when changing
 those areas.
 
-Shader source files live in `src/layout_viewer/qt/render/shaders/`. After editing
+Shader source files live in `src/layout_viewer_core/qt/render/shaders/`. After editing
 them, regenerate the local packs:
 
 ```bash

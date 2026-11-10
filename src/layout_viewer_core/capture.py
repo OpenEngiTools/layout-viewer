@@ -18,7 +18,7 @@ class CaptureResult:
 
 def merge_scene(previous, patch, changed):
     """Replace only changed source records, preserving untouched value identities."""
-    from layout_viewer.mesh import scene_network_names
+    from layout_viewer_core.mesh import scene_network_names
 
     updates = {}
     for name in ("polygons", "traces", "joins", "pads", "object_info"):

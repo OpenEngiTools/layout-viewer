@@ -8,7 +8,7 @@ from typing import Any, Collection, Sequence
 
 import numpy as np
 
-from layout_viewer.scene import (
+from layout_viewer_core.scene import (
     LayoutScene,
     Point,
     SceneJoin,

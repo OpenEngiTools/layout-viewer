@@ -6,7 +6,7 @@ from __future__ import annotations
 from PySide6.QtCore import QRectF, Qt
 from PySide6.QtGui import QColor, QIcon, QPainter, QPainterPath, QPen, QPixmap
 
-from layout_viewer.qt.ui.theme import COLORS
+from layout_viewer_core.qt.ui.theme import COLORS
 
 
 def layer_icon_path(layer_count: int = 2) -> QPainterPath:

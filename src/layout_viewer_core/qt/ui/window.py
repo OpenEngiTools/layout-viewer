@@ -26,19 +26,19 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from layout_viewer.mesh import prepare_scene
-from layout_viewer.progress import throttle_progress
-from layout_viewer.qt.ui.icons import workspace_icon
-from layout_viewer.qt.ui.navigation import NavigationCapsule
-from layout_viewer.qt.ui.panels import ElidedLabel, LayerPanel, NetworkPanel
-from layout_viewer.qt.ui.theme import COLORS, apply_viewer_theme
-from layout_viewer.qt.view.canvas import LayoutView
-from layout_viewer.scene import union_bounds
+from layout_viewer_core.mesh import prepare_scene
+from layout_viewer_core.progress import throttle_progress
+from layout_viewer_core.qt.ui.icons import workspace_icon
+from layout_viewer_core.qt.ui.navigation import NavigationCapsule
+from layout_viewer_core.qt.ui.panels import ElidedLabel, LayerPanel, NetworkPanel
+from layout_viewer_core.qt.ui.theme import COLORS, apply_viewer_theme
+from layout_viewer_core.qt.view.canvas import LayoutView
+from layout_viewer_core.scene import union_bounds
 
 if TYPE_CHECKING:
-    from layout_viewer.mesh import PreparedScene
-    from layout_viewer.picking import PickedObject
-    from layout_viewer.scene import LayoutScene
+    from layout_viewer_core.mesh import PreparedScene
+    from layout_viewer_core.picking import PickedObject
+    from layout_viewer_core.scene import LayoutScene
 
 
 class _PreparationSignals(QObject):
@@ -101,7 +101,7 @@ class _Prepare(QRunnable):
                 self.signals.scene_ready.emit(self.scene)
             mesh = (self.preview_scene, self.preview_prepared) if self.preview_prepared is not None else None
             if self.result is not None and self.result.patch is not None and self.previous is not None:
-                from layout_viewer.incremental import prepare_incremental
+                from layout_viewer_core.incremental import prepare_incremental
 
                 prepared = prepare_incremental(
                     self.scene, self.previous[0], self.previous[1], self.result.patch, self.result.changed
