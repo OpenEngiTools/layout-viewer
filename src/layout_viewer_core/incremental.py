@@ -78,8 +78,8 @@ def prepare_incremental(scene, previous, parent, patch, changed):
     Removed/replaced ranges become unreachable through drawing and picking.
     Periodic compaction bounds tombstones and retained immutable chunks.
     """
-    from layout_viewer.mesh import prepare_scene, scene_network_names
-    from layout_viewer.picking import OverlayPickIndex
+    from layout_viewer_core.mesh import prepare_scene, scene_network_names
+    from layout_viewer_core.picking import OverlayPickIndex
 
     if not changed:
         return parent

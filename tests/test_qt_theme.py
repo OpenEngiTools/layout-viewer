@@ -9,7 +9,7 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 from PySide6.QtGui import QFontDatabase
 from PySide6.QtWidgets import QApplication, QWidget
 
-from layout_viewer.qt.ui.theme import apply_viewer_theme
+from layout_viewer_core.qt.ui.theme import apply_viewer_theme
 
 
 def test_theme_uses_available_font_and_existing_assets() -> None:

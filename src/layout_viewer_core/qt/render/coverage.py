@@ -3,7 +3,7 @@
 import numpy as np
 from PySide6.QtGui import QImage, QRhiBuffer, QRhiTexture
 
-from layout_viewer.colors import NET_COLORS
+from layout_viewer_core.colors import NET_COLORS
 
 
 class SdfCoverage:

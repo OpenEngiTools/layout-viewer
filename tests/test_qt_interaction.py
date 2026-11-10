@@ -2,8 +2,8 @@ from PySide6.QtCore import QPoint
 from PySide6.QtCore import Qt
 from PySide6.QtTest import QTest
 
-from layout_viewer.mesh import prepare_scene
-from layout_viewer.qt.view.canvas import LayoutView
+from layout_viewer_core.mesh import prepare_scene
+from layout_viewer_core.qt.view.canvas import LayoutView
 
 
 def test_canvas_click_selects_and_escape_clears_selection(qapp, sample_scene) -> None:

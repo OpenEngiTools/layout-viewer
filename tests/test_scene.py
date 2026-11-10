@@ -2,7 +2,7 @@ from dataclasses import FrozenInstanceError
 
 import pytest
 
-from layout_viewer.scene import LayoutScene, SceneLayer, ScenePolygon
+from layout_viewer_core.scene import LayoutScene, SceneLayer, ScenePolygon
 
 
 def test_scene_normalizes_collections_and_reports_geometry_bounds(sample_scene) -> None:

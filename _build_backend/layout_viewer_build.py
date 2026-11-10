@@ -34,11 +34,11 @@ def build_wheel(wheel_directory, config_settings=None, metadata_directory=None):
     root = Path.cwd().resolve()
     destination = str(Path(wheel_directory).resolve())
     metadata = str(Path(metadata_directory).resolve()) if metadata_directory is not None else None
-    with tempfile.TemporaryDirectory(prefix="layout-viewer-wheel-") as temporary:
+    with tempfile.TemporaryDirectory(prefix="layout-viewer-core-wheel-") as temporary:
         staging = Path(temporary)
         shutil.copytree(
-            root / "src/layout_viewer",
-            staging / "src/layout_viewer",
+            root / "src/layout_viewer_core",
+            staging / "src/layout_viewer_core",
             ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "*.qsb"),
         )
         for name in ("pyproject.toml", "README.md", "LICENSE"):

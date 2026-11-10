@@ -22,13 +22,13 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from layout_viewer.colors import net_color
-from layout_viewer.mesh import scene_network_names
-from layout_viewer.qt.ui.icons import workspace_icon
-from layout_viewer.qt.ui.theme import COLORS
+from layout_viewer_core.colors import net_color
+from layout_viewer_core.mesh import scene_network_names
+from layout_viewer_core.qt.ui.icons import workspace_icon
+from layout_viewer_core.qt.ui.theme import COLORS
 
 if TYPE_CHECKING:
-    from layout_viewer.scene import LayoutScene, SceneLayer
+    from layout_viewer_core.scene import LayoutScene, SceneLayer
 
 
 class ElidedLabel(QLabel):

@@ -18,18 +18,18 @@ from PySide6.QtGui import (
 )
 from PySide6.QtWidgets import QLabel, QRhiWidget, QWidget
 
-from layout_viewer.camera import Camera
-from layout_viewer.picking import PickHit
-from layout_viewer.qt.ui.inspector import ObjectInspector
-from layout_viewer.qt.ui.loading import LoadingPanel
-from layout_viewer.qt.render.renderer import Renderer
-from layout_viewer.qt.render.rhi import graphics_api
-from layout_viewer.qt.ui.theme import COLORS
+from layout_viewer_core.camera import Camera
+from layout_viewer_core.picking import PickHit
+from layout_viewer_core.qt.ui.inspector import ObjectInspector
+from layout_viewer_core.qt.ui.loading import LoadingPanel
+from layout_viewer_core.qt.render.renderer import Renderer
+from layout_viewer_core.qt.render.rhi import graphics_api
+from layout_viewer_core.qt.ui.theme import COLORS
 
 if TYPE_CHECKING:
-    from layout_viewer.mesh import PreparedScene
-    from layout_viewer.picking import PickedObject, PickObject
-    from layout_viewer.scene import Bounds, LayoutScene
+    from layout_viewer_core.mesh import PreparedScene
+    from layout_viewer_core.picking import PickedObject, PickObject
+    from layout_viewer_core.scene import Bounds, LayoutScene
 
 
 class LayoutView(QRhiWidget):

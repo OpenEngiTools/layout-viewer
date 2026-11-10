@@ -1,5 +1,5 @@
 
-"""Launch the synthetic demo board with ``python -m layout_viewer``."""
+"""Launch the synthetic demo board with ``python -m layout_viewer_core``."""
 
 from __future__ import annotations
 
@@ -17,8 +17,8 @@ def main(argv: Sequence[str] | None = None) -> None:
     )
     parser.add_argument("--color-by-layer", action="store_false", dest="color_by_net", help="Use source layer colors")
     args = parser.parse_args(argv)
-    from layout_viewer import show_scene
-    from layout_viewer.demo import demo_scene
+    from layout_viewer_core import show_scene
+    from layout_viewer_core.demo import demo_scene
 
     show_scene(demo_scene(), color_by_net=args.color_by_net, backend=args.backend)
 

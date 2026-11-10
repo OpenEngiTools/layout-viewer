@@ -3,8 +3,8 @@ from threading import RLock
 
 import pytest
 
-from layout_viewer.capture import SourceCapture
-from layout_viewer.scene import LayoutScene, SceneLayer, SceneObjectInfo, ScenePolygon
+from layout_viewer_core.capture import SourceCapture
+from layout_viewer_core.scene import LayoutScene, SceneLayer, SceneObjectInfo, ScenePolygon
 
 
 @dataclass

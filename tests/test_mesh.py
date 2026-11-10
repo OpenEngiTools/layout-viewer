@@ -1,7 +1,7 @@
 import numpy as np
 
-from layout_viewer.mesh import prepare_scene
-from layout_viewer.scene import LayoutScene
+from layout_viewer_core.mesh import prepare_scene
+from layout_viewer_core.scene import LayoutScene
 
 
 def test_prepare_scene_builds_polygon_and_analytic_geometry(sample_scene) -> None:

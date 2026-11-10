@@ -6,7 +6,7 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
 import pytest
 
-from layout_viewer.scene import LayoutScene, SceneLayer, SceneObjectInfo, ScenePad, ScenePolygon, SceneTrace
+from layout_viewer_core.scene import LayoutScene, SceneLayer, SceneObjectInfo, ScenePad, ScenePolygon, SceneTrace
 
 
 @pytest.fixture

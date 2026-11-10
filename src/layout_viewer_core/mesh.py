@@ -9,7 +9,7 @@ from typing import Any, Callable, Iterator, Sequence
 
 import numpy as np
 
-from layout_viewer.scene import (
+from layout_viewer_core.scene import (
     Bounds,
     LayoutScene,
     SceneComponent,
@@ -270,8 +270,8 @@ def _prepare_sdf(
 
 
 def _pickable(prepared: PreparedScene, scene: LayoutScene, sources: np.ndarray) -> PreparedScene:
-    from layout_viewer.incremental import outline_data
-    from layout_viewer.picking import PickIndex
+    from layout_viewer_core.incremental import outline_data
+    from layout_viewer_core.picking import PickIndex
 
     sources.setflags(write=False)
     ranges = {}
@@ -325,7 +325,7 @@ def _prepare_polygon_buffers(
         try:
             import mapbox_earcut
         except ImportError as exc:
-            raise ImportError("Triangulation requires: pip install layout-viewer.") from exc
+            raise ImportError("Triangulation requires: pip install layout-viewer-core.") from exc
     vertices, indices, batches, vertex_nets = [], [], [], []
     net_ids = {net: index for index, net in enumerate(scene_network_names(scene))}
     polygon_groups = {}
